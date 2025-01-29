@@ -66,5 +66,43 @@ public class MovieController {
     return ResponseEntity.ok(foundMovie.get());
   }
 
+  @PutMapping("/movies/{index}")
+  public ResponseEntity<Movie> updateMovie(@PathVariable int index, @RequestBody Movie movie) {
+    if (movie.getTitle().isEmpty() || movie.getDirector().isEmpty()) {
+      return ResponseEntity.badRequest().build();
+    }
+
+    // Tikriname, ar paduotas indeksas yra
+    if (index <= movies.size() - 1) { // Patikrinu, ar toks indeksas egzistuoja
+      Movie movieFromDb = movies.get(index);
+
+      movieFromDb.setId(movie.getId());
+      movieFromDb.setTitle(movie.getTitle());
+      movieFromDb.setDirector(movie.getDirector());
+
+      return ResponseEntity.ok(movieFromDb);
+    }
+
+    movies.add(movie);
+
+    return ResponseEntity.created(
+                    ServletUriComponentsBuilder.fromCurrentRequest()
+                            .path("/{index}")
+                            .buildAndExpand(movies.size() - 1)
+                            .toUri())
+            .body(movie);
+  }
+
+  @DeleteMapping("/movies/{index}")
+  public ResponseEntity<Void> deleteMovie(@PathVariable int index) {
+    // Pastebime, jog tikrinimo sąkinius rašome viršuje. Tai vadinama Guard Clauses
+    if (index > movies.size() - 1) {
+      return ResponseEntity.notFound().build();
+    }
+
+    movies.remove(index);
+    return ResponseEntity.noContent().build();
+  }
+
 
 }
