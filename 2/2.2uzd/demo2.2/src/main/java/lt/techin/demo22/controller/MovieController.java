@@ -53,4 +53,18 @@ public class MovieController {
             .body(movie);
   }
 
+  @GetMapping("/movies/search") // /books neveiks, nes užimta
+  public ResponseEntity<Movie> getBookByTitle(@RequestParam String title) {
+    Optional<Movie> foundMovie = movies.stream()
+            .filter(b -> b.getTitle().contains(title))
+            .findFirst();
+
+    if (foundMovie.isEmpty()) {
+      return ResponseEntity.notFound().build();
+    }
+
+    return ResponseEntity.ok(foundMovie.get());
+  }
+
+
 }
