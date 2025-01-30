@@ -38,104 +38,93 @@ public class MovieController {
     return ResponseEntity.ok(movieService.findAllMovies());
   }
 
-  @GetMapping("/movies/{id}")
-  public ResponseEntity<Movie> getMovie(@PathVariable long id) {
-//    if (id > movies.size() - 1) {
-//      return ResponseEntity.notFound().build();// build() reikia nurodyti, nes jokio kūno negrąžiname
-//    }
-    Optional<Movie> foundMovie = movieService.findMovieById(id);
-
-    if (foundMovie.isEmpty()) {
-      return ResponseEntity.notFound().build();
-    }
-
-    return ResponseEntity.ok(foundMovie.get());
-  }
-
-  @PostMapping("/movies")
-  // Klaustukas - būtinas, nes grąžinamas tipas gali būti
-  // Book arba String
-  public ResponseEntity<?> saveMovie(@RequestBody Movie movie) {
-    // Jei pavadinimas arba autorius tušti, grąžinti 400 Bad Request
-    if (movie.getTitle().isEmpty() || movie.getDirector().isEmpty()) {
-      //      return ResponseEntity.badRequest().build();
-      // Grąžiname ir String, tam kad klientui būdų aiškiau,
-      // kas įvyko blogai
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Title or director cannot be empty");
-    }
-
-    Movie savedMovie = movieService.saveMovie(movie);
-
-    return ResponseEntity.created(
-                    ServletUriComponentsBuilder.fromCurrentRequest()
-                            .path("/{id}")
-                            .buildAndExpand(savedMovie.getId())
-                            .toUri())
-            .body(movie);
-  }
-
-  // Toks endpoint geriau
-  @GetMapping("/movies/search") // /books neveiks, nes užimta
-  public ResponseEntity<Movie> getMovieByTitle(@RequestParam String title) {
-//    Optional<Movie> foundMovie = movieService.findAllMovies().stream()
-//            .filter(b -> movieService.existsMovieByTitle(title))
-//            .findFirst();
-
-    // Reikia koreguoti
-
-    for (Movie movie : movieService.findAllMovies()) {
-      if (!movieService.existsMovieByTitle(title)) {
-        return ResponseEntity.notFound().build();
-      }
-    }
-
-    return ResponseEntity.ok(movieService.findMovieByTitle(title));
-  }
-
-  @PutMapping("/movies/{id}")
-  public ResponseEntity<?> updateMovie(@PathVariable long id, @RequestBody Movie movie) {
-    if (movie.getTitle().isEmpty() || movie.getDirector().isEmpty()) {
-      //return ResponseEntity.badRequest().build();
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Title or director cannot be empty");
-    }
-
-    // Tikriname, ar paduotas indeksas id yra???
-    if (movieService.existsMovieById(id)) {
-      Movie movieFromDb = movieService.findMovieById(id).get();
-
-      movieFromDb.setTitle(movie.getTitle());
-      movieFromDb.setDirector(movie.getDirector());
-
-      return ResponseEntity.ok(movieService.saveMovie(movieFromDb));
-    }
-
-    Movie savedMovie = movieService.saveMovie(movie);
-
-    return ResponseEntity.created(
-                    ServletUriComponentsBuilder.fromCurrentRequest()
-                            // Reikia daryti replacePath, nes kitap priklijuos rezultatą prie
-                            // egzistuojančio galo
-                            .replacePath("/api/movies/{id}")
-                            .buildAndExpand(savedMovie.getId())
-                            .toUri())
-            .body(movie);
-  }
-
-  @DeleteMapping("/movies/{id}")
-  public ResponseEntity<Void> deleteMovie(@PathVariable long id) {
-    // Pastebime, jog tikrinimo sąkinius rašome viršuje. Tai vadinama Guard Clauses
-//    if (index > movies.size() - 1) {
+//  @GetMapping("/movies/{id}")
+//  public ResponseEntity<Movie> getMovie(@PathVariable long id) {
+//
+//    Optional<Movie> foundMovie = movieService.findMovieById(id);
+//
+//    if (foundMovie.isEmpty()) {
 //      return ResponseEntity.notFound().build();
 //    }
 //
-//    movies.remove(index);
-    if (!movieService.existsMovieById(id)) {
-      return ResponseEntity.notFound().build();
-    }
+//    return ResponseEntity.ok(foundMovie.get());
+//  }
 
-    movieService.deleteMovieById(id);
-    return ResponseEntity.noContent().build();
-  }
+//  @PostMapping("/movies")
+//  // Klaustukas - būtinas, nes grąžinamas tipas gali būti
+//  // Book arba String
+//  public ResponseEntity<?> saveMovie(@RequestBody Movie movie) {
+//    // Jei pavadinimas arba autorius tušti, grąžinti 400 Bad Request
+//    if (movie.getTitle().isEmpty() || movie.getDirector().isEmpty()) {
+//      //      return ResponseEntity.badRequest().build();
+//      // Grąžiname ir String, tam kad klientui būdų aiškiau,
+//      // kas įvyko blogai
+//      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Title or director cannot be empty");
+//    }
+//
+//    Movie savedMovie = movieService.saveMovie(movie);
+//
+//    return ResponseEntity.created(
+//                    ServletUriComponentsBuilder.fromCurrentRequest()
+//                            .path("/{id}")
+//                            .buildAndExpand(savedMovie.getId())
+//                            .toUri())
+//            .body(movie);
+//  }
+
+
+//  @GetMapping("/movies/search") // /books neveiks, nes užimta
+//  public ResponseEntity<Movie> getMovieByTitle(@RequestParam String title) {
+//
+//
+//    for (Movie movie : movieService.findAllMovies()) {
+//      if (!movieService.existsMovieByTitle(title)) {
+//        return ResponseEntity.notFound().build();
+//      }
+//    }
+//
+//    return ResponseEntity.ok(movieService.findMovieByTitle(title));
+//  }
+
+//  @PutMapping("/movies/{id}")
+//  public ResponseEntity<?> updateMovie(@PathVariable long id, @RequestBody Movie movie) {
+//    if (movie.getTitle().isEmpty() || movie.getDirector().isEmpty()) {
+//      //return ResponseEntity.badRequest().build();
+//      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Title or director cannot be empty");
+//    }
+//
+//    // Tikriname, ar paduotas indeksas id yra???
+//    if (movieService.existsMovieById(id)) {
+//      Movie movieFromDb = movieService.findMovieById(id).get();
+//
+//      movieFromDb.setTitle(movie.getTitle());
+//      movieFromDb.setDirector(movie.getDirector());
+//
+//      return ResponseEntity.ok(movieService.saveMovie(movieFromDb));
+//    }
+//
+//    Movie savedMovie = movieService.saveMovie(movie);
+//
+//    return ResponseEntity.created(
+//                    ServletUriComponentsBuilder.fromCurrentRequest()
+//                            // Reikia daryti replacePath, nes kitap priklijuos rezultatą prie
+//                            // egzistuojančio galo
+//                            .replacePath("/api/movies/{id}")
+//                            .buildAndExpand(savedMovie.getId())
+//                            .toUri())
+//            .body(movie);
+//  }
+
+//  @DeleteMapping("/movies/{id}")
+//  public ResponseEntity<Void> deleteMovie(@PathVariable long id) {
+//
+//    if (!movieService.existsMovieById(id)) {
+//      return ResponseEntity.notFound().build();
+//    }
+//
+//    movieService.deleteMovieById(id);
+//    return ResponseEntity.noContent().build();
+//  }
 
 
 }

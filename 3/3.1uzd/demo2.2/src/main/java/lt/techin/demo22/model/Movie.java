@@ -32,22 +32,23 @@ public class Movie {
     return title;
   }
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+//  public void setTitle(String title) {
+//    this.title = title;
+//  }
 
   public String getDirector() {
     return director;
   }
 
-  public void setDirector(String director) {
-    this.director = director;
-  }
+//  public void setDirector(String director) {
+//    this.director = director;
+//  }
 
   // getId() reikalingas, kad Jackson galėtu serialize/
   // deserialize id
-  public long getId() {
-    return id;
-  }
+
+//  public long getId() {
+//    return id;
+//  }
 
 }

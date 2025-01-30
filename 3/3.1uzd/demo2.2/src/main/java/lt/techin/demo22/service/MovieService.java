@@ -22,28 +22,28 @@ public class MovieService {
     return movieRepository.findAll();
   }
 
-  public boolean existsMovieById(long id) {
-    return movieRepository.existsById(id);
-  }
+//  public boolean existsMovieById(long id) {
+//    return movieRepository.existsById(id);
+//  }
 
-  public Optional<Movie> findMovieById(long id) {
-    return movieRepository.findById(id);
-  }
+//  public Optional<Movie> findMovieById(long id) {
+//    return movieRepository.findById(id);
+//  }
 
-  public Movie saveMovie(Movie movie) {
-    return movieRepository.save(movie);
-  }
+//  public Movie saveMovie(Movie movie) {
+//    return movieRepository.save(movie);
+//  }
 
-  public void deleteMovieById(long id) {
-    movieRepository.deleteById(id);
-  }
+//  public void deleteMovieById(long id) {
+//    movieRepository.deleteById(id);
+//  }
 
-  public boolean existsMovieByTitle(String title) {
-    // Call custom derived query
-    return movieRepository.existsByTitle(title);
-  }
+//  public boolean existsMovieByTitle(String title) {
+//    // Call custom derived query
+//    return movieRepository.existsByTitle(title);
+//  }
 
-  public Movie findMovieByTitle(String title) {
-    return movieRepository.findByTitle(title);
-  }
+//  public Movie findMovieByTitle(String title) {
+//    return movieRepository.findByTitle(title);
+//  }
 }
