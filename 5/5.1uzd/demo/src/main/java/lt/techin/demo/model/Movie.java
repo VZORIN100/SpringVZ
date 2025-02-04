@@ -27,15 +27,25 @@ public class Movie {
   //@Pattern .
   private String title; // Duomenų bazėje: VARCHAR
   //Validation has ended for title? Is there a wall between here and @Pattern.
-
-  @Pattern(regexp = "(^[A-Z][a-z]+$)|([^0-9]+$)", message = "Must start with uppercase letter, " +
+  
+  @Pattern(regexp = "^[A-Z][a-z]", message = "Must start with uppercase letter, " +
           "and continue as lowercase. " + "Also not contain any numbers.")
-  //@Pattern(regexp = "^[A-Z][a-z]+$", message = "director must start with uppercase letter, and continue as" + " lowercase")
+  //@Pattern(regexp = "^[A-Z][a-z]+$" is best use even if Exercise is asking not to use numbers.
+  // Because @Pattern(regexp = "^[A-Z][a-z][^0-9]+$" is kinda correct but "^[A-Z][a-z]+$" already states:
+  //This is what should be included inside [] and anything else is excluded inside,
+  //like numbers, symbols or other stuff.
+  //For Future! @Pattern(regexp = "(^[A-Z][a-z]+$)|([^0-9]+$)", can happen, but it is enough to do one regexp
+  // I mean not using OR | symbol. Like @Pattern(regexp = "^[A-Z][a-z][^0-9]+$"
   //
+  //Different ways of writing below.
+//  @Pattern(regexp = "(^[A-Z][a-z]+$)|([^0-9]+$)", message = "Must start with uppercase letter, " +
+//          "and continue as lowercase. " + "Also not contain any numbers.")
+  //@Pattern(regexp = "^[A-Z][a-z]+$", message = "Must start with uppercase letter, and continue as lowercase")
   //@Pattern(regexp = "[^0-9]+$", message = "director must not contain numbers")
+  //
   //Kodel uzkomentojame? Nes @Pattern(regexp = "[^0-9]+$"
   // pjausis su above @Pattern(regexp = "^[A-Z][a-z]+$". Du @Pattern vienu metu ne per gerai.
-  private String director; // VARCHAR [^0-9]
+  private String director; // VARCHAR [50]
 
   // Galiu ir vaikinėje lentelėje išsaugoti įrašą - review
   @OneToMany(cascade = CascadeType.ALL)
