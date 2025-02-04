@@ -26,9 +26,13 @@ public class Movie {
   private String title; // Duomenų bazėje: VARCHAR
   //Validation has ended for title? Is there a wall between here and @Pattern.
 
-  @Pattern(regexp = "^[A-Z][a-z]+$", message = "director must start with uppercase letter, and continue as" +
-          " lowercase")
-  @Pattern(regexp = "[^0-9]+$", message = "director must not contain numbers")
+  @Pattern(regexp = "(^[A-Z][a-z]+$)|([^0-9]+$)", message = "Must start with uppercase letter, " +
+          "and continue as lowercase. " + "Also not contain any numbers.")
+  //@Pattern(regexp = "^[A-Z][a-z]+$", message = "director must start with uppercase letter, and continue as" + " lowercase")
+  //
+  //@Pattern(regexp = "[^0-9]+$", message = "director must not contain numbers")
+  //Kodel uzkomentojame? Nes @Pattern(regexp = "[^0-9]+$"
+  // pjausis su above @Pattern(regexp = "^[A-Z][a-z]+$". Du @Pattern vienu metu ne per gerai.
   private String director; // VARCHAR [^0-9]
 
   // Galiu ir vaikinėje lentelėje išsaugoti įrašą - review
