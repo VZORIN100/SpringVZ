@@ -17,8 +17,10 @@ public class Movie {
   private long id; // Duomenų bazėje: BIGINT
 
   @NotNull
-  @Size(max = 150, message = "Maximum 150 characters")
-  @Size(min = 2, message = "Minimum 2 characters")
+  @Size(min = 2, max = 150)
+  //Can do like this or bellow as two separate. But without message they will fight one another.
+//  @Size(max = 150, message = "Maximum 150 characters")
+//  @Size(min = 2, message = "Minimum 2 characters")
 
   // Jau suprantame, jog pattern reikalauja mažiausiai 2 simbolių; jei pridėsime prie
   // @Size min = 2, pjausis su Pattern jei jis yra po @Size .
