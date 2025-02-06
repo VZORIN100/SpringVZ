@@ -24,6 +24,7 @@ public class Movie {
   private String title; // Duomenų bazėje: VARCHAR[150]
   //Validation has ended for title? Is there a wall between here and @Pattern.
 
+  @NotNull
   @Size(min = 4, max = 50, message = "Must be between 4 and 50 characters.")
   @Pattern(regexp = "^[A-Z][a-z]+$", message = "Must start with uppercase letter, " +
           "and continue as lowercase. " + "Also not contain any numbers.")
