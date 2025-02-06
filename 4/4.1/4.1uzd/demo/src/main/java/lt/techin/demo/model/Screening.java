@@ -15,11 +15,11 @@ public class Screening {
   private long id;
 
   private String theatre;
-  private LocalDate date;
-  private LocalTime time;
+  private String date;
+  private String time;
 
 
-  public Screening(String theatre, LocalDate date, LocalTime time) {
+  public Screening(String theatre, String date, String time) {
     this.theatre = theatre;
     this.date = date;
     this.time = time;
@@ -36,19 +36,19 @@ public class Screening {
     this.theatre = theatre;
   }
 
-  public LocalDate getDate() {
+  public String getDate() {
     return date;
   }
 
-  public void setDate(LocalDate date) {
+  public void setDate(String date) {
     this.date = date;
   }
 
-  public LocalTime getTime() {
+  public String getTime() {
     return time;
   }
 
-  public void setTime(LocalTime time) {
+  public void setTime(String time) {
     this.time = time;
   }
 
