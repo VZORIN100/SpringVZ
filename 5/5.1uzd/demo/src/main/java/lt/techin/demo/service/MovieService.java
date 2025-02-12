@@ -62,5 +62,16 @@ public class MovieService {
 //    return movieRepository.findByTitle(title);
 //  }
 
+  public Page<Movie> findAllMoviesPage(int page, int size, String sort) {
+    if (sort == null) {
+      Pageable pageable = PageRequest.of(page, size);
+
+      return movieRepository.findAll(pageable);
+    }
+
+    Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+    return movieRepository.findAll(pageable);
+  }
+
 
 }

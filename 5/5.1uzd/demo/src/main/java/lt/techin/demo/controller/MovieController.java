@@ -139,5 +139,39 @@ public class MovieController {
     return ResponseEntity.ok(movieService.findAllMoviesByDirector(director));
   }
 
+  // Pagination
+  @GetMapping("/movies/pagination")
+  public ResponseEntity<Page<Movie>> getMoviesPage(@RequestParam int page,
+                                                   @RequestParam int size,
+                                                   @RequestParam(required = false) String sort) {
+    return ResponseEntity.ok(movieService.findAllMoviesPage(page, size, sort));
+  }
+  //GET http://localhost:8080/api/movies will return all movies with id 45; 116; 118.
+  //Top to bottom listed.
+  //
+  //GET http://localhost:8080/api/movies/pagination?page=0&size=1
+  //page=0 means first page. Pages are index based. All start at 0 index/first page.
+  //size=1 means returns 1 item. In number, i.e. quantity.
+  //
+  //GET http://localhost:8080/api/movies/pagination?page=0&size=1 will return
+  //45 only. What I mean is first, index-0, page gets only 1 first topmost item from our list.
+  //Which just happens to be 45.
+  //
+  //GET http://localhost:8080/api/movies/pagination?page=0&size=2 will return
+  //45 and 116 only. What I mean is first, index-0, page, gets only 2 topmost item from our list.
+  //Which just happens to be 45 and 116.
+  //
+  //GET http://localhost:8080/api/movies/pagination?page=1&size=1 will return
+  //116 only. What I mean is second, index-1, page gets only 1 item, but second topmost in line from our list.
+  //Which just happens to be 116.
+  //
+  //GET http://localhost:8080/api/movies/pagination?page=2&size=1 will return
+  //118 only. What I mean is third, index-2, page gets only 1 item, but third topmost next in line from our list.
+  //Which just happens to be 118.
+  //
+  //That was paginated result.
+  //For sorting try http://localhost:8080/api/movies/pagination?page=0&size=3&sort=id from smallest to highest?
+
+
 }
 
