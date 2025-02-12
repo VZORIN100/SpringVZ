@@ -55,6 +55,16 @@ public class Movie {
   @JoinColumn(name = "movie_id")
   private List<Screening> screenings;
 
+  // Čia CascadeType.ALL nerašyti. Nepakeis vaikinės lentelės - tik kvies
+  // egzistuojantį id
+  @ManyToMany
+  @JoinTable(
+          name = "movies_actors",
+          joinColumns = @JoinColumn(name = "movie_id"),
+          inverseJoinColumns = @JoinColumn(name = "actor_id")
+  )
+  private List<Actor> actors;
+
 
   // id nereikia, nes jis generuojamas
   public Movie(String title, String director, List<Screening> screenings) {
@@ -62,6 +72,7 @@ public class Movie {
     this.title = title;
     this.director = director;
     this.screenings = screenings;
+    this.actors = actors;
   }
 
 
@@ -100,6 +111,14 @@ public class Movie {
 
   public void setScreenings(List<Screening> screenings) {
     this.screenings = screenings;
+  }
+
+  public List<Actor> getActors() {
+    return actors;
+  }
+
+  public void setActors(List<Actor> actors) {
+    this.actors = actors;
   }
 
 }
