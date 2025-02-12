@@ -64,9 +64,8 @@ public class Movie {
   )
   private List<Actor> actors;
 
-
   // id nereikia, nes jis generuojamas
-  public Movie(String title, String director, List<Screening> screenings) {
+  public Movie(String title, String director, List<Screening> screenings, List<Actor> actors) {
     //this.id = id;
     this.title = title;
     this.director = director;
