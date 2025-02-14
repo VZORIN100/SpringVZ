@@ -43,7 +43,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                             .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
 
-                            // Leidžiama daryti bet kam, net neautintifikuotui klientui, į šį endpoint
+                            // Leidžiama daryti bet kam, net neautintifikuotui klientui, į šį endpoint.
+                            // Lets unregistered users to register by creating their user.
                             .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
 
                             .requestMatchers(HttpMethod.PUT, "/api/users/{id}").hasRole("ADMIN")
