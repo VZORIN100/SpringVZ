@@ -33,5 +33,9 @@ public class ActorService {
     return actorRepository.existsById(id);
   }
 
+  public void deleteActorById(long id) {
+    actorRepository.deleteById(id);
+  }
+
 
 }

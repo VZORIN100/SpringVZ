@@ -113,6 +113,22 @@ public class ActorController {
             .body(actor);
   }
 
+  @DeleteMapping("/actors/{id}")
+  public ResponseEntity<Void> deleteActor(@PathVariable long id) {
+    // Pastebime, jog tikrinimo sąkinius rašome viršuje. Tai vadinama Guard Clauses
+//    if (index > movies.size() - 1) {
+//      return ResponseEntity.notFound().build();
+//    }
+//
+//    movies.remove(index);
+    if (!actorService.existsActorById(id)) {
+      return ResponseEntity.notFound().build();
+    }
+
+    actorService.deleteActorById(id);
+    return ResponseEntity.noContent().build();
+  }
+
   //POST like in Teacher Example in BookController is a bit different.
   //BookController has commented out section with Map<String, String> result = new HashMap<>();
   //
